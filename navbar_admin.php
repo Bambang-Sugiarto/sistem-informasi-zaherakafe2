@@ -125,6 +125,13 @@ if (empty($_SESSION['email'])) {
                     </div>
                 <?php endif; ?>
             </li>
+            <?php if ($_SESSION['level'] == 'user') : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="tambah_pembayaran.php">
+                        <i class="fas fa-fw fa-dollar-sign"></i>
+                        <span>Pembayaran</span></a>
+                </li>
+            <?php endif; ?>
             <?php if ($_SESSION['level'] == 'admin') : ?>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
@@ -146,6 +153,13 @@ if (empty($_SESSION['email'])) {
                         <span>Laporan</span>
                     </a>
                 </li>
+                <?php if ($_SESSION['level'] == 'admin') : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="detail_pembayaran.php">
+                        <i class="fas fa-fw fa-dollar-sign"></i>
+                        <span>Pembayaran</span></a>
+                </li>
+            <?php endif; ?>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
                     Pengaturan
@@ -171,9 +185,29 @@ if (empty($_SESSION['email'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle" src="assets/img/boy.png" style="max-width: 60px">
-                                <span class="ml-2 d-none d-lg-inline text-white small">Hai, <?= $_SESSION['email'] ?></span>
+                                <?php
+                                $email = $_SESSION['email'];
+                                $sql = "SELECT * FROM tb_login WHERE email ='$email'";
+                                $result = mysqli_query($koneksi, $sql);
+                                if ($result) {
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_array($result)) {
+                                ?>
+
+                                            <span class="ml-2 d-none d-lg-inline text-white small">Hai, <?= $row['nama_lengkap'] ?></span>
+                                <?php
+                                        }
+                                    }
+                                }
+
+
+                                ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="edit_profile_user.php">
+                                    <i class="fas fa-user-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
                                 <a class="dropdown-item" href="logout.php">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout

@@ -13,6 +13,17 @@ if (isset($_GET['id_onproses'])) {
     }
 }
 
+if (isset($_GET['id_byr'])) {
+    $id_byr = $_GET['id_byr'];
+    $query = "DELETE FROM tb_pembayaran WHERE id = $id_byr";
+    $run = mysqli_query($koneksi, $query);
+    if ($run){
+        header("Location: detail_pembayaran.php");
+    } else {
+        echo "gagal";
+    }
+}
+
 if (isset($_GET['id_proses'])) {
     $id_proses = $_GET['id_proses'];
     $query = "DELETE FROM tb_pesanan WHERE id = $id_proses";
