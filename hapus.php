@@ -4,10 +4,10 @@ include "koneksi.php";
 
 if (isset($_GET['id_onproses'])) {
     $id_onproses = $_GET['id_onproses'];
-    $query = "DELETE FROM tb_pesanan WHERE id = $id_onproses";
+    $query = "DELETE FROM tb_checkout WHERE id = $id_onproses";
     $run = mysqli_query($koneksi, $query);
     if ($run) {
-        header("Location: sedangproses_admin.php");
+        header("Location: admin.php");
     } else {
         echo "gagal";
     }
@@ -19,17 +19,6 @@ if (isset($_GET['id_byr'])) {
     $run = mysqli_query($koneksi, $query);
     if ($run) {
         header("Location: detail_pembayaran.php");
-    } else {
-        echo "gagal";
-    }
-}
-
-if (isset($_GET['id_proses'])) {
-    $id_proses = $_GET['id_proses'];
-    $query = "DELETE FROM tb_pesanan WHERE id = $id_proses";
-    $run = mysqli_query($koneksi, $query);
-    if ($run) {
-        header("Location: sudahproses_admin.php");
     } else {
         echo "gagal";
     }
