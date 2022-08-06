@@ -20,14 +20,13 @@
               <tr>
                 <th>Antrian</th>
                 <th>Nama</th>
-                <th>No HP / WA</th>
-                <th>Makanan</th>
-                <th>Harga</th>
-                <th>Jumlah</th>
-                <th>Minuman</th>
-                <th>Harga</th>
-                <th>Jumlah</th>
+                <th>Email</th>
+                <th>Alamat</th>
+                <th>No Hp</th>
+                <th>Pembayaran</th>
+                <th>Produk</th>
                 <th>Total</th>
+                <th>Tanggal</th>
                 <th>Status</th>
                 <th>Opsi</th>
               </tr>
@@ -35,38 +34,31 @@
             <tbody>
               <?php
 
-              $query = "SELECT nama, nohp, nama_makanan, harga_makanan, jml_makanan, nama_minuman, harga_makanan,
-                        nama_minuman, harga_minuman, jml_minuman, status,
-                        (harga_makanan * jml_makanan) + (harga_minuman * jml_minuman) as total FROM tb_pesanan
-                        INNER JOIN tb_makanan ON tb_pesanan.id_makanan = tb_makanan.id_makanan 
-                        INNER JOIN tb_minuman ON tb_pesanan.id_minuman = tb_minuman.id_minuman
-                        WHERE status = 'Selesai' ";
+              $query = "SELECT * FROM tb_checkout WHERE status = 'Selesai' ";
+
               $sql = mysqli_query($koneksi, $query);
-              $no=1;
+              $no = 1;
               while ($data = mysqli_fetch_array($sql)) { ?>
+
                 <tr>
                   <td><?= $no++; ?></td>
                   <td><?= $data["nama"]; ?></td>
+                  <td><?= $data["email"]; ?></td>
+                  <td><?= $data["alamat"]; ?></td>
                   <td><?= $data["nohp"]; ?></td>
-                  <td><?= $data["nama_makanan"]; ?></td>
-                  <td><?= "Rp ".number_format($data["harga_makanan"], 2,',','.'); ?></td>
-                  <td><?= $data["jml_makanan"]; ?></td>
-                  <td><?= $data["nama_minuman"]; ?></td>
-                  <td><?= "Rp ".number_format($data["harga_minuman"], 2,',','.'); ?></td>
-                  <td><?= $data["jml_minuman"]; ?></td>
-                  <td><?= "Rp ".number_format($data["total"], 2,',','.'); ?></td>
+                  <td><?= $data["metode_bayar"]; ?></td>
+                  <td><?= $data["total_pesan"]; ?></td>
+                  <td><?= $data["total_bayar"]; ?>.000,00</td>
+                  <td><?= $data["tanggal"]; ?></td>
                   <td><span class="badge badge-success"><?= $data["status"]; ?></span></td>
                   <td>
-                    <?php
-                    $query2 = "SELECT id FROM tb_pesanan WHERE status='Selesai' AND nohp = '$data[nohp]'";
-                    $sql2 = mysqli_query($koneksi, $query2);
-                    while ($data2 = mysqli_fetch_array($sql2)) { ?>
-                      <a href="hapus.php?id_proses=<?= $data2['id']; ?>" onclick="return confirm('Apakah anda yakin?');"><span class="btn btn-sm btn-danger mt-1">Hapus</span></a>
-                      <a href="edit_proses.php?id=<?= $data2['id']; ?>"><span class="btn btn-sm btn-success px-3 mt-1">Edit</span></a>
-                    <?php
-                    }
-                    ?>
-
+                    <?php if ($_SESSION['level'] == 'user') : ?>
+                      <a href="hapus.php?id_onproses=<?= $data['id']; ?>" onclick="return confirm('Apakah anda yakin?');"><span class="btn btn-sm btn-danger mt-1">Batal</span></a>
+                    <?php endif; ?>
+                    <?php if ($_SESSION['level'] == 'admin') : ?>
+                      <a href="hapus.php?id_onproses=<?= $data['id']; ?>" onclick="return confirm('Apakah anda yakin?');"><span class="btn btn-sm btn-danger mt-1">Hapus</span></a>
+                      <a href="edit_proses.php?id=<?= $data['id']; ?>"><span class="btn btn-sm btn-success px-3 mt-1">Edit</span></a>
+                    <?php endif; ?>
                   </td>
 
                 </tr>

@@ -17,7 +17,7 @@ if (isset($_GET['id_byr'])) {
     $id_byr = $_GET['id_byr'];
     $query = "DELETE FROM tb_pembayaran WHERE id = $id_byr";
     $run = mysqli_query($koneksi, $query);
-    if ($run){
+    if ($run) {
         header("Location: detail_pembayaran.php");
     } else {
         echo "gagal";
@@ -85,6 +85,28 @@ if (isset($_GET['id_akun'])) {
     $run = mysqli_query($koneksi, $query);
     if ($run) {
         header("Location: pengaturan_admin.php");
+    } else {
+        echo "gagal";
+    }
+}
+
+if (isset($_GET['id_cart'])) {
+    $id_cart = $_GET['id_cart'];
+    $query = "DELETE FROM tb_cart WHERE id = $id_cart";
+    $run = mysqli_query($koneksi, $query);
+    if ($run) {
+        header("Location: cart.php");
+    } else {
+        echo "gagal";
+    }
+}
+
+if (isset($_GET['id_cart_all'])) {
+    $id_cart_all = $_GET['id_cart_all'];
+    $query = "DELETE FROM tb_cart";
+    $run = mysqli_query($koneksi, $query);
+    if ($run) {
+        header("Location: cart.php");
     } else {
         echo "gagal";
     }

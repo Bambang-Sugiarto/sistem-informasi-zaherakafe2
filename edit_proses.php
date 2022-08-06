@@ -3,7 +3,7 @@
 include "koneksi.php";
 
 $id = $_GET['id'];
-$ambilData = mysqli_query($koneksi, "SELECT * FROM tb_pesanan
+$ambilData = mysqli_query($koneksi, "SELECT * FROM tb_checkout
 WHERE id='$id'");
 $data = mysqli_fetch_array($ambilData);
 
@@ -51,9 +51,9 @@ $data = mysqli_fetch_array($ambilData);
 
 if (isset($_POST['submit'])) {
   $status = $_POST['status'];
-  $update = mysqli_query($koneksi, "UPDATE tb_pesanan SET status = '$status' WHERE id = '$id'");
+  $update = mysqli_query($koneksi, "UPDATE tb_checkout SET status = '$status' WHERE id = '$id'");
   if ($update) {
-    echo "<script>alert('Selamat Data Anda Sudah Tersimpan !');document.location='admin.php'</script>";
+    echo "<script>alert('Berhasil Update Data !');document.location='admin.php'</script>";
   } else {
     echo 'Gagal Upload !';
   }

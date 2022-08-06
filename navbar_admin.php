@@ -22,6 +22,42 @@ if (empty($_SESSION['email'])) {
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/ruang-admin.min.css" rel="stylesheet">
+    <style>
+        .checkout-btn a.disabled {
+            pointer-events: none;
+            opacity: .5;
+            user-select: none;
+        }
+
+        .tampil-pesanan {
+            max-width: 35rem;
+            background-color: whitesmoke;
+            border-radius: .5rem;
+            text-align: center;
+            padding: 1.5rem;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+
+        }
+
+        .tampil-pesanan span {
+            display: inline-block;
+            border-radius: .5rem;
+            background-color: white;
+            padding: .5rem 1.5rem;
+            color: black;
+            margin: .5rem;
+        }
+
+        .tampil-pesanan span.grand-total {
+            width: 100%;
+            background-color: var(--success);
+            color: white;
+            padding: 1rem;
+            margin-top: 1rem;
+
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -80,27 +116,6 @@ if (empty($_SESSION['email'])) {
                 <?php endif; ?>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable5" aria-expanded="true" aria-controls="collapseTable">
-                    <i class="fa fa-microphone"></i>
-                    <span>Karaoke</span>
-                </a>
-                <?php if ($_SESSION['level'] == 'user') : ?>
-                    <div id="collapseTable5" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="sedangproses_karaoke_admin.php">Status</a>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <?php if ($_SESSION['level'] == 'admin') : ?>
-                    <div id="collapseTable5" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="sedangproses_karaoke_admin.php">Sedang Diproses</a>
-                            <a class="collapse-item" href="sudahproses_karaoke_admin.php">Sudah Diproses</a>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable2" aria-expanded="true" aria-controls="collapseTable">
                     <i class="fa fa-plus"></i>
                     <span>Tambah</span>
@@ -108,8 +123,8 @@ if (empty($_SESSION['email'])) {
                 <?php if ($_SESSION['level'] == 'user') : ?>
                     <div id="collapseTable2" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="tambah_pesanan.php">Pesanan</a>
-                            <a class="collapse-item" href="tambah_karaoke.php">Karaoke</a>
+                            <!-- <a class="collapse-item" href="tambah_pesanan.php">Pesanan</a>
+                            <a class="collapse-item" href="tambah_karaoke.php">Karaoke</a> -->
                             <a class="collapse-item" href="tambah_review.php">Review</a>
                         </div>
                     </div>
@@ -119,8 +134,7 @@ if (empty($_SESSION['email'])) {
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="tambah_makanan.php">Makanan</a>
                             <a class="collapse-item" href="tambah_minuman.php">Minuman</a>
-                            <a class="collapse-item" href="tambah_pesanan.php">Pesanan</a>
-                            <a class="collapse-item" href="tambah_karaoke.php">Karaoke</a>
+                            <a class="collapse-item" href="order_admin.php">Pesanan</a>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -132,6 +146,14 @@ if (empty($_SESSION['email'])) {
                         <span>Pembayaran</span></a>
                 </li>
             <?php endif; ?>
+            <li class="nav-item">
+                <a class="nav-link" href="cart.php">
+                    <i class="fas fa-fw fa-bars"></i>
+                    Belanja <span class="angka" style="padding: .1rem .5rem; 
+                        border-radius: .5rem; background-color: #fc544b; color: white; font-size: 1rem;">
+                        <?= $jml_cart; ?></span></a>
+            </li>
+
             <?php if ($_SESSION['level'] == 'admin') : ?>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
@@ -154,12 +176,12 @@ if (empty($_SESSION['email'])) {
                     </a>
                 </li>
                 <?php if ($_SESSION['level'] == 'admin') : ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="detail_pembayaran.php">
-                        <i class="fas fa-fw fa-dollar-sign"></i>
-                        <span>Pembayaran</span></a>
-                </li>
-            <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="detail_pembayaran.php">
+                            <i class="fas fa-fw fa-dollar-sign"></i>
+                            <span>Pembayaran</span></a>
+                    </li>
+                <?php endif; ?>
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
                     Pengaturan
